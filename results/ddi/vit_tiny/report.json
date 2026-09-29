@@ -1,0 +1,179 @@
+{
+  "overall": {
+    "accuracy": 0.75,
+    "balanced_accuracy": 0.6203481392557023,
+    "precision": 0.5217391304347826,
+    "recall": 0.35294117647058826,
+    "f1": 0.42105263157894735,
+    "roc_auc": 0.6578631452581032,
+    "sensitivity": 0.35294117647058826,
+    "specificity": 0.8877551020408163
+  },
+  "subgroup": [
+    {
+      "subgroup": "12",
+      "n": 49,
+      "accuracy": 0.7142857142857143,
+      "balanced_accuracy": 0.5574162679425837,
+      "precision": 0.3333333333333333,
+      "recall": 0.2727272727272727,
+      "f1": 0.3,
+      "roc_auc": 0.5526315789473684,
+      "sensitivity": 0.2727272727272727,
+      "specificity": 0.8421052631578947
+    },
+    {
+      "subgroup": "34",
+      "n": 44,
+      "accuracy": 0.7954545454545454,
+      "balanced_accuracy": 0.7291666666666667,
+      "precision": 0.6363636363636364,
+      "recall": 0.5833333333333334,
+      "f1": 0.6086956521739131,
+      "roc_auc": 0.8359375,
+      "sensitivity": 0.5833333333333334,
+      "specificity": 0.875
+    },
+    {
+      "subgroup": "56",
+      "n": 39,
+      "accuracy": 0.7435897435897436,
+      "balanced_accuracy": 0.573051948051948,
+      "precision": 0.6666666666666666,
+      "recall": 0.18181818181818182,
+      "f1": 0.2857142857142857,
+      "roc_auc": 0.6071428571428572,
+      "sensitivity": 0.18181818181818182,
+      "specificity": 0.9642857142857143
+    }
+  ],
+  "fairness": {
+    "equal_opportunity_gap": 0.40151515151515155,
+    "demographic_parity_gap": 0.17307692307692307,
+    "group_true_positive_rates": {
+      "12": 0.2727272727272727,
+      "34": 0.5833333333333334,
+      "56": 0.18181818181818182
+    },
+    "group_positive_prediction_rates": {
+      "12": 0.1836734693877551,
+      "34": 0.25,
+      "56": 0.07692307692307693
+    },
+    "interpretation": "Gaps are descriptive statistics and should be interpreted with task-specific clinical and statistical assumptions."
+  },
+  "calibration": {
+    "ece": 0.07081187900268673,
+    "bins": [
+      {
+        "left": 0.5,
+        "right": 0.6000000000000001,
+        "count": 21,
+        "confidence": 0.5509976744651794,
+        "accuracy": 0.7142857142857143
+      },
+      {
+        "left": 0.6000000000000001,
+        "right": 0.7000000000000001,
+        "count": 21,
+        "confidence": 0.6641463041305542,
+        "accuracy": 0.6190476190476191
+      },
+      {
+        "left": 0.7000000000000001,
+        "right": 0.8,
+        "count": 30,
+        "confidence": 0.7556189894676208,
+        "accuracy": 0.7
+      },
+      {
+        "left": 0.8,
+        "right": 0.9,
+        "count": 34,
+        "confidence": 0.8552144169807434,
+        "accuracy": 0.7941176470588235
+      },
+      {
+        "left": 0.9,
+        "right": 1.0,
+        "count": 26,
+        "confidence": 0.9317379593849182,
+        "accuracy": 0.8846153846153846
+      }
+    ],
+    "brier_score": 0.1860540807247162,
+    "temperature": 1.2908316850662231
+  },
+  "robustness": {
+    "noise": 0.7196969696969697,
+    "brightness": 0.7045454545454546,
+    "contrast": 0.7121212121212122
+  },
+  "xai": [
+    {
+      "sample_id": "000254",
+      "subgroup": "12",
+      "method": "integrated_gradients",
+      "faithfulness": -0.13331202665964761,
+      "stability": 0.7878317832946777
+    },
+    {
+      "sample_id": "000301",
+      "subgroup": "12",
+      "method": "integrated_gradients",
+      "faithfulness": 0.08778544267018636,
+      "stability": 0.6458125710487366
+    },
+    {
+      "sample_id": "000104",
+      "subgroup": "56",
+      "method": "integrated_gradients",
+      "faithfulness": 0.1961797078450521,
+      "stability": 0.3875376582145691
+    },
+    {
+      "sample_id": "000335",
+      "subgroup": "12",
+      "method": "integrated_gradients",
+      "faithfulness": -0.2818281849225362,
+      "stability": 0.3799385726451874
+    },
+    {
+      "sample_id": "000145",
+      "subgroup": "56",
+      "method": "integrated_gradients",
+      "faithfulness": 0.04925535122553507,
+      "stability": 0.11163860559463501
+    },
+    {
+      "sample_id": "000620",
+      "subgroup": "34",
+      "method": "integrated_gradients",
+      "faithfulness": 0.19016963243484497,
+      "stability": 0.8229034543037415
+    }
+  ],
+  "uncertainty": [
+    {
+      "subgroup": "12",
+      "n": 49,
+      "mean_predictive_entropy": 0.43528833985328674
+    },
+    {
+      "subgroup": "34",
+      "n": 44,
+      "mean_predictive_entropy": 0.4335349202156067
+    },
+    {
+      "subgroup": "56",
+      "n": 39,
+      "mean_predictive_entropy": 0.41063356399536133
+    }
+  ],
+  "notes": [
+    "DDI images must be obtained directly from the official Stanford AIMI portal under its research-use terms.",
+    "Temperature scaling is fitted on a validation split and evaluated on the held-out test split.",
+    "XAI metrics are computed on a small configurable sample for practical runtime.",
+    "This experiment is not a clinical validation study."
+  ]
+}

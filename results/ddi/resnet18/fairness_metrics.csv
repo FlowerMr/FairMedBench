@@ -1,0 +1,2 @@
+equal_opportunity_gap,demographic_parity_gap,group_true_positive_rates,group_positive_prediction_rates,interpretation
+0.31060606060606066,0.1622187336473051,"{'12': 0.45454545454545453, '34': 0.5833333333333334, '56': 0.2727272727272727}","{'12': 0.3673469387755102, '34': 0.29545454545454547, '56': 0.20512820512820512}",Gaps are descriptive statistics and should be interpreted with task-specific clinical and statistical assumptions.

@@ -1,0 +1,2 @@
+ece,bins,brier_score
+0.005567447841167444,"[{'left': 0.1, 'right': 0.2, 'count': 450, 'confidence': 0.10556744784116745, 'accuracy': 0.1}]",0.8995949741500027
