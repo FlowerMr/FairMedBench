@@ -2,31 +2,85 @@
 
 **FairMedBench** is a modular research benchmark for evaluating medical image classification models beyond overall accuracy.
 
-The framework combines:
+The framework evaluates models from multiple perspectives:
 
 - predictive performance
-- subgroup performance and fairness analysis
+- subgroup fairness analysis
 - explainable AI (XAI)
 - uncertainty and calibration
-- lightweight robustness analysis
+- robustness evaluation
 - reproducible experiment configuration
-- machine-readable reports and visualizations
+- machine-readable research reports
 
-The project is designed as a research-oriented Python package and portfolio project for work in Medical AI, Trustworthy AI, Responsible AI, Explainable AI, and Fair Machine Learning.
+FairMedBench is designed as a research-oriented Python framework for **Medical AI, Trustworthy AI, Responsible AI, Explainable AI, and Fair Machine Learning** research.
 
-> **Important:** FairMedBench is a research and benchmarking framework. It is not a clinical decision-support system and must not be used for clinical diagnosis.
+> **Disclaimer:** FairMedBench is a research and benchmarking framework. It is not a medical device, clinical decision-support system, or diagnostic tool.
 
-## Research Questions
+---
 
-FairMedBench is designed around five questions:
+# Key Features
 
-1. Do medical image classifiers perform differently across population subgroups?
-2. How large are subgroup performance disparities?
-3. Do explanation methods behave consistently across subgroups?
-4. Are confidence and uncertainty calibrated equally well across subgroups?
-5. Can models with similar overall performance have different fairness, explainability, calibration, or robustness profiles?
+### Model Evaluation
+- Accuracy
+- Balanced Accuracy
+- Precision
+- Recall
+- F1-score
+- ROC-AUC
+- Sensitivity
+- Specificity
 
-## Main Architecture
+### Fairness Analysis
+- subgroup performance comparison
+- Equal Opportunity Difference
+- demographic parity analysis
+- transparent fairness reporting
+
+### Explainable AI
+Support for:
+- Grad-CAM
+- Integrated Gradients
+- SHAP (where applicable)
+- transformer-based explanation analysis
+
+Including:
+- explanation visualization
+- faithfulness evaluation
+- stability analysis
+
+### Uncertainty and Calibration
+- Temperature scaling
+- Monte Carlo Dropout
+- Expected Calibration Error (ECE)
+- Brier Score
+- reliability analysis
+
+### Robustness
+Controlled perturbation evaluation:
+
+- Gaussian noise
+- brightness changes
+- contrast changes
+- small rotations
+
+---
+
+# Research Motivation
+
+Medical AI systems should not be evaluated only by overall accuracy.
+
+A model with high accuracy may still:
+
+- perform differently across demographic groups
+- provide unstable explanations
+- produce poorly calibrated confidence estimates
+- fail under small input changes
+
+FairMedBench provides a unified framework to analyze these properties together.
+
+---
+
+# Main Architecture
 
 ```text
                     FairMedBench
@@ -35,122 +89,110 @@ FairMedBench is designed around five questions:
         |                |                |
       Data             Models          Evaluation
         |                |                |
-   Images +            CNN / ViT      Performance
-   Metadata                           Fairness
-                                      Calibration
+ Images + Metadata   CNN / ViT     Performance
+                                      Fairness
                                       XAI
+                                      Calibration
                                       Robustness
-        |                |                |
-        +----------------+----------------+
                          |
                     Reporting
                          |
-          CSV + JSON + Figures + Reports
+              CSV + JSON + Figures
 ```
 
-## Repository Structure
+---
+
+# Repository Structure
 
 ```text
 FairMedBench/
+│
 ├── configs/
 │   ├── demo.yaml
 │   └── ddi.yaml
+│
 ├── docs/
-│   ├── explainability.md
-│   ├── fairness.md
-│   ├── limitations.md
-│   ├── methodology.md
-│   ├── research_report.md
-│   └── uncertainty.md
-├── notebooks/
+│
 ├── scripts/
 │   ├── run_demo.py
 │   └── validate_ddi.py
+│
 ├── src/fairmedbench/
 │   ├── data/
-│   ├── explainability/
-│   ├── fairness/
-│   ├── metrics/
 │   ├── models/
-│   ├── pipeline/
-│   ├── reporting/
-│   ├── robustness/
+│   ├── metrics/
+│   ├── fairness/
+│   ├── explainability/
 │   ├── uncertainty/
-│   ├── visualization/
-│   ├── demo.py
-│   ├── ddi_experiment.py
-│   └── cli.py
+│   ├── robustness/
+│   ├── reporting/
+│   └── visualization/
+│
 ├── tests/
-├── Dockerfile
 ├── pyproject.toml
+├── Dockerfile
 └── README.md
 ```
 
+---
+
+# Installation
+
 ## Requirements
 
-- Python 3.10 or newer
+- Python >= 3.10
 - Git
-- A Windows, Linux, or macOS environment
-- Internet access for installing Python packages
+- Windows / Linux / macOS
 
-A GPU is **not required for the demo**. A CUDA-capable GPU is recommended for the real DDI experiment, especially when using pretrained vision models and XAI methods.
+A GPU is not required for the demo.  
+A CUDA-enabled GPU is recommended for real experiments with pretrained vision models.
 
-## Installation
+---
 
-### 1. Clone the repository
+## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/FairMedBench.git
+git clone https://github.com/FlowerMr/FairMedBench.git
 cd FairMedBench
 ```
 
-If you are running the project from the downloaded ZIP instead, extract it and open a terminal in the `FairMedBench` folder.
+---
 
-### 2. Create a virtual environment
+## Create Environment
 
-Windows PowerShell:
+### Windows
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-Windows Command Prompt:
-
-```cmd
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-Linux/macOS:
+### Linux/macOS
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install the package
+---
+
+## Install
 
 ```bash
-python -m pip install --upgrade pip
 pip install -e .
 ```
 
-For development and tests:
+For development:
 
 ```bash
 pip install -e ".[dev]"
 ```
 
-For notebooks:
+---
 
-```bash
-pip install -e ".[dev,notebook]"
-```
+# Demo
 
-## Run the Demo
-
-The repository contains a lightweight demo that does not require the restricted DDI images.
+FairMedBench includes a lightweight demo using synthetic data.
 
 Run:
 
@@ -158,242 +200,171 @@ Run:
 fairmedbench demo --config configs/demo.yaml
 ```
 
-Alternatively:
+The demo validates the complete evaluation pipeline without requiring medical datasets.
 
-```bash
-python -m fairmedbench.cli demo --config configs/demo.yaml
-```
-
-The demo creates a small synthetic dataset and exercises the main evaluation pipeline.
-
-Results are written under:
+Results:
 
 ```text
 results/demo/
 ```
 
-The demo is intended to verify software functionality. Its synthetic subgroup results must not be interpreted as medical evidence.
+Synthetic results should not be interpreted as medical evidence.
 
-## Run Tests
+---
 
-```bash
-pytest
-```
+# DDI Experiment
 
-The tests cover configuration loading, dataset handling, metric calculations, and important edge cases.
+The main real-data experiment uses the:
 
-## DDI Dataset
+**Diverse Dermatology Images (DDI) Dataset**
 
-The primary real-data experiment is designed for the **Diverse Dermatology Images (DDI)** dataset.
+DDI enables evaluation of dermatology classification models with subgroup analysis, including Fitzpatrick skin-type groups.
 
-DDI is useful for this project because it contains dermatology images together with demographic information that enables subgroup analysis, including Fitzpatrick skin-type groups.
+Dataset information:
 
-Official dataset information:
+- https://ddi-dataset.github.io/
+- https://aimi.stanford.edu/datasets/ddi-diverse-dermatology-images
 
-- Stanford AIMI DDI dataset
-- DDI project website: https://ddi-dataset.github.io/
-- Stanford AIMI dataset page: https://aimi.stanford.edu/datasets/ddi-diverse-dermatology-images
+## Dataset Policy
 
-### Dataset policy
+The DDI images are not included in this repository.
 
-Do **not** commit the DDI images to this repository.
+Users must obtain the dataset through the official distribution process.
 
-The repository expects the user to obtain the dataset through its official distribution process and place it locally.
-
-Expected layout:
+Expected structure:
 
 ```text
 data/
 └── ddi/
     ├── images/
-    │   ├── image_001.jpg
-    │   ├── image_002.jpg
-    │   └── ...
     └── ddi_metadata.csv
 ```
 
-The exact metadata column names should be checked with the supplied validation script before running the experiment.
-
-Validate the local dataset with:
+Validate dataset:
 
 ```bash
 python scripts/validate_ddi.py
 ```
 
-### DDI experiment configuration
+---
 
-The default DDI configuration is stored in:
+# Experimental Results
 
-```text
-configs/ddi.yaml
-```
+FairMedBench was evaluated on the DDI dataset using two vision architectures:
 
-It defines the image location, metadata location, image size, batch size, number of epochs, models, and output directory.
+- ResNet18
+- ViT-Tiny
 
-Run the experiment with:
+The evaluation considers predictive performance, fairness, explainability, and uncertainty.
 
-```bash
-fairmedbench ddi --config configs/ddi.yaml
-```
+## Model Comparison
 
-or:
+| Model | Accuracy | Balanced Accuracy | ROC-AUC | F1 | Sensitivity | Specificity |
+|---|---:|---:|---:|---:|---:|---:|
+| ResNet18 | 0.674 | 0.598 | 0.630 | 0.411 | 0.441 | 0.755 |
+| ViT-Tiny | 0.750 | 0.620 | 0.658 | 0.421 | 0.353 | 0.888 |
 
-```bash
-python -m fairmedbench.cli ddi --config configs/ddi.yaml
-```
+---
 
-The experiment is designed to compare two model families using a shared evaluation protocol. The purpose is not to declare one architecture universally superior, but to compare their performance, subgroup behavior, calibration, explainability, and robustness.
+## Fairness Analysis
 
-## Evaluation
+| Model | Equal Opportunity Gap | Demographic Parity Gap |
+|---|---:|---:|
+| ResNet18 | 0.311 | 0.162 |
+| ViT-Tiny | 0.402 | 0.173 |
 
-### Predictive performance
+Fairness metrics are reported as descriptive subgroup statistics and should be interpreted together with dataset characteristics and clinical assumptions.
 
-The framework supports:
+---
 
-- Accuracy
-- Balanced Accuracy
-- Precision
-- Recall
-- F1-score
-- ROC-AUC where applicable
-- Sensitivity
-- Specificity
+## XAI and Uncertainty
 
-Metrics are reported overall and by subgroup.
+| Model | XAI Faithfulness | XAI Stability | Predictive Entropy |
+|---|---:|---:|---:|
+| ResNet18 | 0.080 | 0.676 | 0.342 |
+| ViT-Tiny | 0.018 | 0.523 | 0.426 |
 
-### Fairness and subgroup analysis
+---
 
-The framework reports transparent subgroup comparisons rather than collapsing all findings into an arbitrary universal fairness score.
+# Reproducibility
 
-Depending on the task and available labels, the analysis can include:
-
-- performance gaps
-- true-positive-rate differences / Equal Opportunity Difference
-- demographic-parity analysis when its assumptions are appropriate
-
-Fairness metrics are accompanied by methodological limitations because no single fairness definition is universally appropriate for medical applications.
-
-### Explainable AI
-
-The project provides a modular explanation layer intended to support methods such as:
-
-- Grad-CAM
-- Integrated Gradients
-- SHAP where practical
-- transformer-oriented explanation methods such as attention-based analysis
-
-The framework is designed not only to visualize explanations but also to evaluate them quantitatively where feasible.
-
-The XAI analysis includes:
-
-- explanation visualization
-- perturbation/deletion-style faithfulness analysis
-- stability under small input perturbations
-- subgroup-level comparison of explanation behavior
-
-### Uncertainty and calibration
-
-The uncertainty module includes:
-
-- temperature scaling
-- Monte Carlo Dropout
-- Expected Calibration Error (ECE)
-- Brier Score
-- reliability diagrams
-- confidence and uncertainty distributions
-
-Calibration can be evaluated overall and separately for subgroups.
-
-### Robustness
-
-A lightweight robustness component can evaluate controlled perturbations such as:
-
-- Gaussian noise
-- brightness changes
-- contrast changes
-- small rotations
-
-The purpose is to examine how model performance changes under controlled perturbations and whether the degradation differs between subgroups.
-
-## Output
-
-Experiments generate machine-readable results and visualizations under the configured output directory.
-
-Typical outputs include:
-
-```text
-results/
-└── <experiment>/
-    ├── overall_metrics.csv
-    ├── subgroup_metrics.csv
-    ├── fairness_metrics.csv
-    ├── calibration_metrics.csv
-    ├── xai_metrics.csv
-    ├── robustness_metrics.csv
-    ├── figures/
-    └── report/
-```
-
-Exact files depend on the experiment configuration and the availability of the relevant model/XAI components.
-
-## Reproducibility
-
-The project uses configuration files and explicit random seeds so experiments can be reproduced more consistently.
-
-The main configuration files are:
+Experiments are controlled using configuration files:
 
 ```text
 configs/demo.yaml
 configs/ddi.yaml
 ```
 
-Results should always be interpreted together with the dataset version, preprocessing configuration, model checkpoint, and evaluation configuration used to produce them.
+Results depend on:
 
-## Limitations
+- dataset version
+- preprocessing pipeline
+- model checkpoint
+- evaluation configuration
 
-This project has several important limitations:
+---
 
-- subgroup metadata can contain measurement errors
-- dataset composition can introduce sampling bias
-- fairness metrics measure statistical properties and do not automatically establish clinical fairness
-- XAI explanations should not be treated as causal explanations
-- uncertainty estimates do not guarantee true clinical uncertainty
-- results from one dataset should not automatically be generalized to other populations or clinical settings
-- the demo uses synthetic data and is not evidence about medical model behavior
-- clinical deployment requires substantially more validation than this research benchmark provides
+# Limitations
 
-For more detail, see `docs/limitations.md`.
+Important limitations:
 
-## Research Report
+- subgroup metadata may contain measurement errors
+- dataset composition may introduce sampling bias
+- fairness metrics do not automatically define clinical fairness
+- XAI explanations are not causal explanations
+- uncertainty estimates do not guarantee true uncertainty
+- results from one dataset should not be directly generalized to other populations
+- clinical deployment requires extensive validation
 
-A research-style report is provided in:
+---
+
+# Research Report
+
+A detailed research-style report is available:
 
 ```text
 docs/research_report.md
 ```
 
-The report follows a mini-paper structure covering motivation, research questions, methodology, experimental setup, results, limitations, and future work.
+It covers:
 
-## Development
+- motivation
+- methodology
+- experimental setup
+- evaluation framework
+- results
+- limitations
+- future directions
 
-Run tests with:
+---
+
+# Development
+
+Run tests:
 
 ```bash
 pytest
 ```
 
-The project is organized as a Python package so that new datasets, models, metrics, and explanation methods can be added without rewriting the complete pipeline.
+The modular architecture allows adding:
 
-## License
+- new datasets
+- new models
+- new metrics
+- new explanation methods
 
-This software is released under the MIT License. See `LICENSE` for details.
+without redesigning the complete pipeline.
 
-The license of the FairMedBench software does not change the terms under which external datasets such as DDI may be accessed or used. Always follow the dataset provider's terms.
+---
 
-## Citation
+# License
 
-If this repository is used in academic work, please cite the repository and the specific dataset/model sources used in the experiment.
+Released under the MIT License.
 
-## Disclaimer
+External datasets such as DDI remain subject to their original access and usage agreements.
 
-FairMedBench is intended for research and educational purposes. It is not a medical device, diagnostic system, or clinical decision-support tool.
+---
+
+# Citation
+
+If you use FairMedBench in academic work, please cite this repository and the original dataset/model sources.
