@@ -1,4 +1,6 @@
 # FairMedBench
+<img width="1312" height="1199" alt="ChatGPT Image Sep 30, 2026, 07_39_50 AM" src="https://github.com/user-attachments/assets/553dca62-a500-450b-be51-811475ba47aa" />
+
 
 **FairMedBench** is a modular research benchmark for evaluating medical image classification models beyond overall accuracy.
 
